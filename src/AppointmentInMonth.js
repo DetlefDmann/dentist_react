@@ -8,3 +8,4 @@ export default ({ time, patient }) => (
     <span className="patient">{patient}</span>
   </div>
 );
+//Dit is hoe appointments er in het calendar overzicht uit komen te zien

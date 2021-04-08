@@ -18,9 +18,9 @@ export default ({ appointments }) => {
   const appointmentsByDay = divideByDay(appointments);
 
   const daysInMonthJSX = Object.values(
-    appointmentsByDay
+    appointmentsByDay // arr met afspraken/dag van iedere dag in apppointmentsByDay
   ).map((appointmentsInDay, index) => (
-    <DayInMonth appointments={appointmentsInDay} key={index} />
+    <DayInMonth appointments={appointmentsInDay} key={index} />// returnt een div class "day" met appointments
   ));
 
   return (

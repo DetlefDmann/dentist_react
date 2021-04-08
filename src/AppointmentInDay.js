@@ -10,3 +10,4 @@ export default ({ time, patient, dentist, assistant }) => (
     <div className="assistant">Assistent: {assistant}</div>
   </li>
 );
+// dit is hoe appointments in het dagoverzicht eruit komen te zien
