@@ -1,4 +1,12 @@
 import React from "react";
 import "./App.css";
+import ScheduleNewAppointment from "./ScheduleNewAppointment";
 
-export default () => <div>Home!</div>;
+export default (props) => {
+        return <>
+                    <ScheduleNewAppointment 
+                        dentists={props.dentists}
+                        assistants={props.assistants}
+                    />
+                </>;
+}
