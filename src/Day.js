@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import "./Day.css";
 import AppointmentInDay from "./AppointmentInDay";
+import { GlobalContext } from './GlobalContext';
 
-export default ({ appointments }) => {
-  const appointmentsJSX = appointments.sort((a,b) => {
+const Day = () => {
+  const [state, setState] = useContext(GlobalContext);
+  const appointmentsJSX = state.appointments.filter(app => app.day === state.selectedDay).sort((a,b) => {
     return (a.time>b.time ?  1: -1)
   }).map(
     ({ time, patient, dentist, assistant }, index) => (
@@ -16,10 +18,17 @@ export default ({ appointments }) => {
       />
     )
   );
+      const handleSelection = (e) => {
+        const day = e.target.value;
+        setState({
+          ...state,selectedDay:+day
+        })
+      }
+ console.log(state)
   return (
       <>
         <p>Welke dag willen we zien?</p>
-        <select name="day" id="day">
+        <select name="day" id="day"  value={state.selectedDay} onChange={handleSelection}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -56,3 +65,5 @@ export default ({ appointments }) => {
       );
 };
 //de afspraken zijn nu gesorteerd op tijdstip
+
+export default Day;
