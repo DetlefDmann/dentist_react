@@ -5,6 +5,7 @@ import Home from "./Home";
 import Calendar from "./Calendar";
 import Day from "./Day";
 import { GlobalProvider } from './GlobalContext';
+import NavBar from "./components/NavBar";
 
 
 const App = () => {
@@ -13,19 +14,7 @@ const App = () => {
   <GlobalProvider >
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/calendar">Calendar view</Link>
-            </li>
-            <li>
-              <Link to="/day">Day view</Link>
-            </li>
-          </ul>
-        </nav>
+        <NavBar />
         <main>
           <Switch>
             <Route path="/calendar">
