@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import "./Calendar.css";
-import DayInMonth from "./components/DayInMonth";
-import { GlobalContext } from "./GlobalContext";
+import DayInMonth from "./DayInMonth";
+import { GlobalContext } from "../GlobalContext";
 
 const divideByDay = appointments => {
   const appointmentsByDay = {};

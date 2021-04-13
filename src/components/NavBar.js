@@ -14,6 +14,9 @@ const NavBar = () => {
             <li>
               <Link to="/day">Day view</Link>
             </li>
+            <li>
+              <Link to="/admin">Afspraken maken/wijzigen</Link>
+            </li>
           </ul>
         </nav>
     )

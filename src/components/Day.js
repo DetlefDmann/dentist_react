@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import "./Day.css";
-import AppointmentInDay from "./components/AppointmentInDay";
-import { GlobalContext } from './GlobalContext';
+import AppointmentInDay from "./AppointmentInDay";
+import { GlobalContext } from '../GlobalContext';
 
 const Day = () => {
   const [state, setState] = useContext(GlobalContext);
