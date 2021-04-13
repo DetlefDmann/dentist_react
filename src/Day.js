@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import "./Day.css";
-import AppointmentInDay from "./AppointmentInDay";
+import AppointmentInDay from "./components/AppointmentInDay";
 import { GlobalContext } from './GlobalContext';
 
 const Day = () => {
@@ -8,13 +8,10 @@ const Day = () => {
   const appointmentsJSX = state.appointments.filter(app => app.day === state.selectedDay).sort((a,b) => {
     return (a.time>b.time ?  1: -1)
   }).map(
-    ({ time, patient, dentist, assistant }, index) => (
+    (appointment) => (
       <AppointmentInDay
-        time={time}
-        patient={patient}
-        dentist={dentist}
-        assistant={assistant}
-        key={index}
+        appointment={appointment}
+        key={appointment.id}
       />
     )
   );

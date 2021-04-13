@@ -1,6 +1,6 @@
 import React, {useState, createContext} from 'react'
-import { patientData } from "./patientList";
-import { appointments } from "./appointmentsList";
+import { patientData } from "./components/patientList";
+import { appointments } from "./components/appointmentsList";
 
 
 export const GlobalContext = createContext();

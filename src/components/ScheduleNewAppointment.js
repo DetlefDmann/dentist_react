@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { appointments } from './appointmentsList';
-import { GlobalContext } from './GlobalContext';
+import { GlobalContext } from '../GlobalContext';
 import { v4 as uuid } from 'uuid';
 
 
