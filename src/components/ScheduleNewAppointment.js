@@ -3,20 +3,40 @@ import { GlobalContext } from '../GlobalContext';
 import { v4 as uuid } from 'uuid';
 
 
-const ScheduleNewAppointment = () => {
+const ScheduleNewAppointment = (props) => {
+    const text = props.text;
+    //wanneer er geen appointment prop is zijn dit de initiele waarden
+    let initDay = 1;
+    let initTime = 8;
+    let initPatient = {};
+    let initDentist = {};
+    let initAssistant = {};
+    let initId = uuid();
+
+    //wanneer er wel appointment props zijn, zijn dit de initiele waarden
+    if(typeof props.appToAlter!=="undefined"){
+        const alterThis = props.appToAlter;
+        initDay = alterThis.day;
+        initTime = alterThis.time;
+        initPatient = alterThis.patient;
+        initDentist = alterThis.dentist;
+        initAssistant = alterThis.assistant;
+        initId = alterThis.id;
+    };
+
     const [state, setState] = useContext(GlobalContext);
-    const [day, setDay] = useState(1);
-    const [time,setTime] = useState(8);
-    const [patient, setPatient] = useState({});
-    const [dentist , setDentist] = useState({});
-    const [assistant, setAssistant] = useState({});
+    const [day, setDay] = useState(initDay);
+    const [time,setTime] = useState(initTime);
+    const [patient, setPatient] = useState(initPatient);
+    const [dentist , setDentist] = useState(initDentist);
+    const [assistant, setAssistant] = useState(initAssistant);
     const [newAppointment, setNewAppointment] = useState({
         day:day,
         time:time,
         patient:patient,
         dentist:dentist,
         assistant:assistant,
-        appointmentId:uuid(),
+        appointmentId:initId,
     });
     const patientSelectorInputsJSX = state.patients.map((patient) => {
         return (<option key={patient.id} value={JSON.stringify({patient})}>{patient.firstName} {patient.lastName}</option>)
@@ -40,80 +60,106 @@ const ScheduleNewAppointment = () => {
         }
         
     useEffect(() => {
-        setNewAppointment({
+        setNewAppointment( {
             day:day,
             time:time,
             patient:patient,
             dentist:dentist,
             assistant:assistant,
-            appointmentId:uuid(),
+            id:initId,
         });
-    }, [patient, dentist, assistant, day,time])
+    }, [patient, dentist, assistant, day, time])
 
     const handleDentist = e => {
         const value = JSON.parse(e.target.value);
         const dentistA = value.dentist;
         value.dentist.isSick ? alert("Deze tandarts is ziek"):
         setDentist({name:`${dentistA.firstName} ${dentistA.lastName}`,id:dentistA.id});
+        setNewAppointment({...newAppointment,dentist:dentist})
     }
     const handleAssistant = e => {
         const value = JSON.parse(e.target.value);
         const assistantA = value.assistant;
         value.assistant.isSick ? alert("Deze assistent is ziek"):
         setAssistant({name:`${assistantA.firstName} ${assistantA.lastName}`,id:assistantA.id});
+        setNewAppointment({...newAppointment,assistant:assistant})
     }
     const handlePatient = e => {
         const value = JSON.parse(e.target.value);
         const patientA = value.patient;
         console.log(patient);
         setPatient({name:`${patientA.firstName} ${patientA.lastName}`,id:patientA.id});
+        setNewAppointment({...newAppointment, patient:patient})
     }
     const handleDay = e => {
         const value = JSON.parse(e.target.value);
         setDay(value);
+        setNewAppointment({...newAppointment,day:day})
     }
     const handleTime = e => {
         const value = JSON.parse(e.target.value);
-        setTime(value)
+        setTime(value);
+        setNewAppointment({
+            ...newAppointment,
+            time:time,
+        })
     }
-    console.log(dentist.name)
-    console.log(assistant.name)
-    console.log(patient)
+    // console.log(dentist)
+    // console.log(assistant)
+    // console.log(patient)
     console.log((newAppointment))
     //console.table(state.appointments)
 
     const checkPossible = () =>{
         console.log("Aan het checken");
         //functie om te kijken of de tandarts en assistent beschikbaar zijn
+        //controleer of er al een afspraak is met het tijdstip en dag en tandarts
+           // alert eventueel dat de tandarts niet kan op dat moment
+        //controleer of patient al een afspraak heeft op dat tijdstip
+            // alert dat 
     }
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        setState({...state,appointments:[...state.appointments,newAppointment]})
+        setState({...state,appointments:[...state.appointments,newAppointment]});
+        initId = uuid();
+        setNewAppointment({
+            day:day,
+            time:time,
+            patient:patient,
+            dentist:dentist,
+            assistant:assistant,
+            id:initId,
+        });
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Plan een nieuwe afspraak.</h3><br/>
+            <h3>{text}</h3><br/>
 
             <label htmlFor="patient">Naam patient:</label><br/>
             <select name="setPatient" id="patient" onChange={handlePatient}>
+                <option >{initPatient.name}</option>
                 {patientSelectorInputsJSX}
             </select><br/>
             <label htmlFor="dentist">Kies een tandarts:</label><br/>
             <select name="setDentist" id="dentist" onChange={handleDentist}>
+                <option value="{}">{initDentist.name}</option>
                 {dentistSelectorInputsJSX}
             </select><br/>
             <label htmlFor="assistant">Kies een assistent:</label><br/>
             <select name="setAssistant" id="assistant" onChange={handleAssistant}>
+                <option value="{}">{initAssistant.name}</option>
                 {assistantSelectorInputsJSX}
             </select><br/>
             <label htmlFor="dag">Kies een dag:</label><br/>
             <select name="dag" id="dag" onChange={handleDay}>
+                <option value="{}">{initDay}</option>
                 {daysJSX}
             </select><br/>
             <label htmlFor="time">Kies een tijd:</label><br/>
             <select name="time" id="time" onChange={handleTime}>
+                <option value="{}">{initTime}</option>
                 {hoursJSX}
             </select>
             <br/>

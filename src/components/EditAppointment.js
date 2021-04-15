@@ -62,7 +62,7 @@ const EditAppointment = () => {
     }
 
     //nu de appointments filteren en index 0 van het array teruggeven:
-    const appointmentToBeAltered = state.appointments.filter((currentApp)=>{
+    const appointsmentToBeAltered = state.appointments.filter((currentApp)=>{
         if(typeof filters.patient.id!=="undefined"){return currentApp.patient.id===filters.patient.id}
         else return currentApp.patient.id!==filters.patient.id;
     }).filter((currentApp)=>{
@@ -81,8 +81,9 @@ const EditAppointment = () => {
 
     // Als er afspraken zijn, laat dan elementen zien
     let showAppointment
-    if (appointmentToBeAltered.length>0) {showAppointment=true}
+    if (appointsmentToBeAltered.length>0) {showAppointment=true}
     else {showAppointment=false};
+    
 
     // filter appointments op dag / patient / 
     return (
@@ -103,7 +104,7 @@ const EditAppointment = () => {
             <select name="time" id="time" onChange={selectHandler}>
                 {(filters.time==="undefined") ? <option value={{}}></option> : null}
                 {hoursJSX}
-            </select>
+            </select><br/><br/>
             {/* <label htmlFor="dentist">Om welke tandarts gaat het?</label><br/>
             <select name="dentist" id="dentist" onChange={selectHandler}>
                 {(typeof filters.dentist.id==="undefined") ? <option value={{}}></option> : null}
@@ -114,11 +115,12 @@ const EditAppointment = () => {
                 {(typeof filters.assistant.id==="undefined") ? <option value={{}}></option> : null}
                 {assistantSelectorInputsJSX}
             </select><br/> */}
+            {appointsmentToBeAltered.length>1 ? <><h3>"Er zijn meerdere afspraken die aan deze criteria voldoen!"</h3></> : null}
             <ul className="dayview">
-            {showAppointment ? <AppointmentInDay appointment={appointmentToBeAltered[0]}/> : null}
+            {showAppointment ? <AppointmentInDay appointment={appointsmentToBeAltered[0]}/> : null}
             </ul>
 
-            {showAppointment ? <ScheduleNewAppointment text="Nieuwe data invoeren:" appToAlter={appointmentToBeAltered[0]} /> : <></>}
+            {showAppointment ? <ScheduleNewAppointment text="Nieuwe data invoeren:" appToAlter={appointsmentToBeAltered[0]} /> : <></>}
             
         </div>
     )
