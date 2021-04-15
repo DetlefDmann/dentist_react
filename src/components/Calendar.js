@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import "./Calendar.css";
 import DayInMonth from "./DayInMonth";
+import { GlobalContext } from "../GlobalContext";
 
 const divideByDay = appointments => {
   const appointmentsByDay = {};
@@ -14,13 +15,15 @@ const divideByDay = appointments => {
   return appointmentsByDay;
 };
 
-export default ({ appointments }) => {
+export default () => {
+  const [state ] = useContext(GlobalContext);
+  const appointments = state.appointments ;
   const appointmentsByDay = divideByDay(appointments);
 
   const daysInMonthJSX = Object.values(
-    appointmentsByDay
+    appointmentsByDay // arr met afspraken/dag van iedere dag in apppointmentsByDay
   ).map((appointmentsInDay, index) => (
-    <DayInMonth appointments={appointmentsInDay} key={index} />
+    <DayInMonth appointments={appointmentsInDay} key={index} />// returnt een div class "day" met appointments
   ));
 
   return (
