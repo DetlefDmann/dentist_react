@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 
 const ScheduleNewAppointment = (props) => {
     const text = props.text;
+    let alterThis;
     //wanneer er geen appointment prop is zijn dit de initiele waarden
     let initDay = 1;
     let initTime = 8;
@@ -15,7 +16,7 @@ const ScheduleNewAppointment = (props) => {
 
     //wanneer er wel appointment props zijn, zijn dit de initiele waarden
     if(typeof props.appToAlter!=="undefined"){
-        const alterThis = props.appToAlter;
+        alterThis = props.appToAlter;
         initDay = alterThis.day;
         initTime = alterThis.time;
         initPatient = alterThis.patient;
@@ -36,7 +37,7 @@ const ScheduleNewAppointment = (props) => {
         patient:patient,
         dentist:dentist,
         assistant:assistant,
-        appointmentId:initId,
+        id:initId,
     });
     const patientSelectorInputsJSX = state.patients.map((patient) => {
         return (<option key={patient.id} value={JSON.stringify({patient})}>{patient.firstName} {patient.lastName}</option>)
@@ -104,10 +105,11 @@ const ScheduleNewAppointment = (props) => {
             time:time,
         })
     }
-    // console.log(dentist)
-    // console.log(assistant)
-    // console.log(patient)
-    console.log((newAppointment))
+    
+    // console.log((newAppointment))
+    // console.log((day))
+    // console.log((time))
+    // console.log((initId))
     //console.table(state.appointments)
 
     const checkPossible = () =>{
@@ -119,9 +121,25 @@ const ScheduleNewAppointment = (props) => {
             // alert dat 
     }
 
+    const removeAlteredAppointment = () => {
+        // remove old appointment
+        const updatedAppointments = state.appointments.filter((appointment) =>{
+            return appointment.id!==initId;
+        });
+        console.log(updatedAppointments)
+        return updatedAppointments;
+        alert("Oude afspraak is verwijderd.")
+    }
+    
+
     const handleSubmit = (e) =>{
+        alert(initId)
         e.preventDefault();
-        setState({...state,appointments:[...state.appointments,newAppointment]});
+        let stateAppointments =state.appointments
+        if(typeof props.appToAlter!=="undefined"){
+        stateAppointments =  removeAlteredAppointment();
+        };
+        setState({...state,appointments:[...stateAppointments,newAppointment]});
         initId = uuid();
         setNewAppointment({
             day:day,

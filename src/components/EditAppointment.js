@@ -61,8 +61,16 @@ const EditAppointment = () => {
         console.log(`Filter is : ${JSON.stringify(filters)}`)
     }
 
-    //nu de appointments filteren en index 0 van het array teruggeven:
-    const appointsmentToBeAltered = state.appointments.filter((currentApp)=>{
+    //nu de appointments filteren :
+    
+    
+    const filteredAppointments = state.appointments.sort((a,b) => {
+        return (a.time>b.time ?  1: -1)
+      }).sort((a,b) => {
+        return (a.day>b.day ?  1: -1)
+      });
+    
+   const appointsmentToBeAltered = filteredAppointments.filter((currentApp)=>{
         if(typeof filters.patient.id!=="undefined"){return currentApp.patient.id===filters.patient.id}
         else return currentApp.patient.id!==filters.patient.id;
     }).filter((currentApp)=>{
