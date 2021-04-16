@@ -16,9 +16,9 @@ const AppointmentsAdmin = () => {
 
     return (
         <div>
-            <h2>Wat wil je doen?</h2>
-            <button name="new" onClick={handleChoice}>Nieuwe afspraak maken</button>
-            <button name="exist" onClick={handleChoice}>Bestaande afspraak wijzigen</button>
+            <h2>Wat wil je doen?</h2><br/>
+            <button name="new" onClick={handleChoice}>Nieuwe afspraak maken</button><br/>
+            <button name="exist" onClick={handleChoice}>Bestaande afspraak wijzigen</button><br/>
             {showChosenOption===1 ? <ScheduleNewAppointment text="Plan een nieuwe afspraak:" /> : <EditAppointment />}
             
         </div>
