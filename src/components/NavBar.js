@@ -17,6 +17,9 @@ const NavBar = () => {
             <li>
               <Link to="/admin">Afspraken maken/wijzigen</Link>
             </li>
+            <li>
+              <Link to="/personel">Personeel beheer</Link>
+            </li>
           </ul>
         </nav>
     )
