@@ -32,11 +32,11 @@ const ScheduleNewAppointment = (props) => {
     const [dentist , setDentist] = useState(initDentist);
     const [assistant, setAssistant] = useState(initAssistant);
     const [newAppointment, setNewAppointment] = useState({
-        day:day,
-        time:time,
-        patient:patient,
-        dentist:dentist,
-        assistant:assistant,
+        day:initDay,
+        time:initTime,
+        patient:initPatient,
+        dentist:initDentist,
+        assistant:initAssistant,
         id:initId,
     });
     const patientSelectorInputsJSX = state.patients.map((patient) => {
@@ -76,21 +76,21 @@ const ScheduleNewAppointment = (props) => {
         const dentistA = value.dentist;
         value.dentist.isSick ? alert("Deze tandarts is ziek"):
         setDentist({name:`${dentistA.firstName} ${dentistA.lastName}`,id:dentistA.id});
-        setNewAppointment({...newAppointment,dentist:dentist})
+        setNewAppointment({...newAppointment,dentist:{name:`${dentistA.firstName} ${dentistA.lastName}`,id:dentistA.id}})
     }
     const handleAssistant = e => {
         const value = JSON.parse(e.target.value);
         const assistantA = value.assistant;
         value.assistant.isSick ? alert("Deze assistent is ziek"):
         setAssistant({name:`${assistantA.firstName} ${assistantA.lastName}`,id:assistantA.id});
-        setNewAppointment({...newAppointment,assistant:assistant})
+        setNewAppointment({...newAppointment,assistant:{name:`${assistantA.firstName} ${assistantA.lastName}`,id:assistantA.id}})
     }
     const handlePatient = e => {
         const value = JSON.parse(e.target.value);
         const patientA = value.patient;
         console.log(patient);
         setPatient({name:`${patientA.firstName} ${patientA.lastName}`,id:patientA.id});
-        setNewAppointment({...newAppointment, patient:patient})
+        setNewAppointment({...newAppointment, patient:{name:`${patientA.firstName} ${patientA.lastName}`,id:patientA.id}})
     }
     const handleDay = e => {
         const value = JSON.parse(e.target.value);
@@ -106,7 +106,7 @@ const ScheduleNewAppointment = (props) => {
         })
     }
     
-    // console.log((newAppointment))
+     console.log((newAppointment))
     // console.log((day))
     // console.log((time))
     // console.log((initId))
@@ -126,9 +126,10 @@ const ScheduleNewAppointment = (props) => {
         const updatedAppointments = state.appointments.filter((appointment) =>{
             return appointment.id!==initId;
         });
-        console.log(updatedAppointments)
+        console.log(updatedAppointments);
+        alert("Oude afspraak is verwijderd.");
         return updatedAppointments;
-        alert("Oude afspraak is verwijderd.")
+        
     }
     
 
@@ -157,27 +158,27 @@ const ScheduleNewAppointment = (props) => {
 
             <label htmlFor="patient">Naam patient:</label><br/>
             <select name="setPatient" id="patient" onChange={handlePatient}>
-                <option >{initPatient.name}</option>
+                <option >Vul naam patient in.</option>
                 {patientSelectorInputsJSX}
             </select><br/>
             <label htmlFor="dentist">Kies een tandarts:</label><br/>
             <select name="setDentist" id="dentist" onChange={handleDentist}>
-                <option value="{}">{initDentist.name}</option>
+                <option value="{}">Vul naam tandarts in.</option>
                 {dentistSelectorInputsJSX}
             </select><br/>
             <label htmlFor="assistant">Kies een assistent:</label><br/>
             <select name="setAssistant" id="assistant" onChange={handleAssistant}>
-                <option value="{}">{initAssistant.name}</option>
+                <option value="{}">Vul naam assistent in</option>
                 {assistantSelectorInputsJSX}
             </select><br/>
             <label htmlFor="dag">Kies een dag:</label><br/>
             <select name="dag" id="dag" onChange={handleDay}>
-                <option value="{}">{initDay}</option>
+                <option value="{}">Vul nieuwe dag in {initDay}</option>
                 {daysJSX}
             </select><br/>
             <label htmlFor="time">Kies een tijd:</label><br/>
             <select name="time" id="time" onChange={handleTime}>
-                <option value="{}">{initTime}</option>
+                <option value="{}">Vul nieuwe tijd in: {initTime}</option>
                 {hoursJSX}
             </select>
             <br/>

@@ -6,7 +6,7 @@ const AppointmentsAdmin = () => {
     const [showChosenOption, setShowChosenOption] = useState(1)
     const handleChoice = (e) => {
         console.log(e.target.name);
-        if(e.target.name=="new") {
+        if(e.target.name ==="new") {
             console.log("nieuwe afspraak jonguh")
             setShowChosenOption(1);
         }

@@ -35,6 +35,7 @@ const EditAppointment = () => {
             hoursJSX.push(<option key={j} value={j}>{j}</option>);
         };
 
+        //filters selecteren
     const selectHandler = (e) => {
         const option = e.target.name;
         console.log(option);
