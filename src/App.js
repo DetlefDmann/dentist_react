@@ -8,6 +8,7 @@ import Day from "./components/Day";
 import { GlobalProvider } from './GlobalContext';
 import NavBar from "./components/NavBar";
 import Personel from "./components/Personel";
+import Patients from "./components/Patients";
 
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
             </Route>
             <Route path="/personel">
               <Personel />
+            </Route>
+            <Route path="/patients">
+              <Patients />
             </Route>
             <Route path="/day">
               <Day />

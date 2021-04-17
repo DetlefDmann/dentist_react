@@ -20,6 +20,9 @@ const NavBar = () => {
             <li>
               <Link to="/personel">Personeel beheer</Link>
             </li>
+            <li>
+              <Link to="/patients">Patienten beheer</Link>
+            </li>
           </ul>
         </nav>
     )
