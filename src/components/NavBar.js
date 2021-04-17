@@ -23,6 +23,9 @@ const NavBar = () => {
             <li>
               <Link to="/patients">Patienten beheer</Link>
             </li>
+            <li>
+              <Link to="/sickness">Ziekmelden</Link>
+            </li>
           </ul>
         </nav>
     )
