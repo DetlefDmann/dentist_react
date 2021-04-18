@@ -30,6 +30,11 @@
   margin-left: 0.5rem;
 }
 
+.sickdentist {
+  background-color: red;
+  color: white;
+}
+
 .calendarview .time {
   color: yellowgreen;
 }

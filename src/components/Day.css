@@ -10,7 +10,8 @@
 }
 
 .dayview .time,
-.dayview .patient {
+.dayview .patient,
+.dayview .sickdentist {
   height: 30px;
   padding: 10px;
 }
@@ -28,4 +29,8 @@
 .dayview .dentist,
 .dayview .assistant {
   padding: 10px;
+}
+
+.dayview .sickdentist {
+  background-color: red;
 }

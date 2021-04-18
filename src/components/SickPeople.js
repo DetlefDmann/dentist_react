@@ -19,10 +19,11 @@ const SickPeople = () => {
     const assistantSelectorInputsJSX = state.assistants.map((assistant) => {
         return (<option key={assistant.id} value={JSON.stringify({...assistant})}>{assistant.firstName} {assistant.lastName}</option> )
     });
-    const filterout = (person,role) =>{
+    const filteredOut = (person,role) =>{
         const filtered = state.appointments.filter((appointment) =>{
             return appointment[role].id!==person.id;
         });
+        return filtered;
     };
 
     const handleSick = (e) => {
@@ -46,6 +47,12 @@ const SickPeople = () => {
             });
             setState({
                 ...state, patients:updatedPatients
+            });
+            //afspraken verwijderen wanneer ziek met if isSick===true
+            const cleanedUp = filteredOut(person.identity, person.role);
+            console.log(cleanedUp.length);
+            setState({
+                ...state, appointments:cleanedUp
             })
         }
         else if(person.role==="dentist") {
@@ -60,7 +67,7 @@ const SickPeople = () => {
             })
         }
         else {
-            const updatedAssistents = state.pssistents.map((assistent) =>{
+            const updatedAssistents = state.assistents.map((assistent) =>{
                 if(assistent.id===person.identity.id){
                     return {...assistent, isSick:bool}
                 }
