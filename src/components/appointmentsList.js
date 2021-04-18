@@ -267,8 +267,8 @@ export const appointments = [
         "day": 4,
         "time": 11,
         "patient": {name:"Doortje de Bruijn",id:"4e2c8719-a989-40cb-8661-d94bad62eeba"},
-        "dentist": "Yasmijn van Vliet",
-        "assistant": "Willemijn van der Laan",
+        "dentist": {name:"Anna Bolen", id:"002"},
+        "assistant": {name:"Gerrie Mansinck", id:"011"},
         id:"4e2c8719-a989-40cb-8661-d94bad62eeba"
     },
     {

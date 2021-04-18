@@ -9,10 +9,10 @@ const NavBar = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/calendar">Calendar view</Link>
+              <Link to="/calendar">Maand</Link>
             </li>
             <li>
-              <Link to="/day">Day view</Link>
+              <Link to="/day">Vandaag</Link>
             </li>
             <li>
               <Link to="/admin">Afspraken maken/wijzigen</Link>
@@ -24,7 +24,7 @@ const NavBar = () => {
               <Link to="/patients">Patienten beheer</Link>
             </li>
             <li>
-              <Link to="/sickness">Ziekmelden</Link>
+              <Link to="/sickness">Ziek melden</Link>
             </li>
           </ul>
         </nav>
