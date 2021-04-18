@@ -26,6 +26,7 @@ const ScheduleNewAppointment = (props) => {
     };
 
     const [state, setState] = useContext(GlobalContext);
+    const [enableSubmit, setEnableSubmit] = useState(false);
     const [day, setDay] = useState(initDay);
     const [time,setTime] = useState(initTime);
     const [patient, setPatient] = useState(initPatient);
@@ -112,13 +113,35 @@ const ScheduleNewAppointment = (props) => {
     // console.log((initId))
     //console.table(state.appointments)
 
-    const checkPossible = () =>{
+    const checkPossible = (e) =>{
+        e.preventDefault();
         console.log("Aan het checken");
         //functie om te kijken of de tandarts en assistent beschikbaar zijn
         //controleer of er al een afspraak is met het tijdstip en dag en tandarts
-           // alert eventueel dat de tandarts niet kan op dat moment
-        //controleer of patient al een afspraak heeft op dat tijdstip
-            // alert dat 
+        const sametimeAppointmentsDentist = state.appointments.filter((appointment)=>{return appointment.time===newAppointment.time})
+                                                        .filter((appointment)=>{return appointment.day===newAppointment.day})
+                                                        .filter((appointment)=>{return appointment.dentist.id===newAppointment.dentist.id});
+        const sametimeAppointmentsAssistant = state.appointments.filter((appointment)=>{return appointment.time===newAppointment.time})
+                                                        .filter((appointment)=>{return appointment.day===newAppointment.day})
+                                                        .filter((appointment)=>{return appointment.assistant.id===newAppointment.assistant.id});
+        const sametimeAppointmentsPatient = state.appointments.filter((appointment)=>{return appointment.time===newAppointment.time})
+                                                        .filter((appointment)=>{return appointment.day===newAppointment.day})
+                                                        .filter((appointment)=>{return appointment.patient.id===newAppointment.patient.id});
+        if (sametimeAppointmentsDentist.length>0){
+            alert("Deze tandarts heeft al een afspraak staan op dit tijdstip.");
+            setEnableSubmit(false);
+            return;// Je kunt dan geen afspraak maken
+        }
+        if (sametimeAppointmentsPatient.length>0){
+            alert("De patient heeft al een afspraak staan op dit tijdstip.");
+            setEnableSubmit(false);
+            return;// Je kunt dan geen afspraak maken
+        }
+        if (sametimeAppointmentsAssistant.length>0){
+                alert("Deze assistent heeft al een andere afspraak staan. Kies een andere assistent of plan afspraak zonder assistent.");
+        }
+        console.log("De afspraak kan gepland worden!")
+        setEnableSubmit(true);
     }
 
     const removeAlteredAppointment = () => {
@@ -134,7 +157,6 @@ const ScheduleNewAppointment = (props) => {
     
 
     const handleSubmit = (e) =>{
-        alert(initId)
         e.preventDefault();
         let stateAppointments =state.appointments
         if(typeof props.appToAlter!=="undefined"){
@@ -152,27 +174,36 @@ const ScheduleNewAppointment = (props) => {
         });
     }
 
+    const handleRemove = (e) => {
+        e.preventDefault();
+        let stateAppointments =state.appointments
+        if(typeof props.appToAlter!=="undefined"){
+        stateAppointments =  removeAlteredAppointment();
+        };
+        setState({...state,appointments:[...stateAppointments,newAppointment]});
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <h3>{text}</h3><br/>
 
             <label htmlFor="patient">Naam patient:</label><br/>
-            <select name="setPatient" id="patient" onChange={handlePatient}>
+            <select name="patient" id="patient" onChange={handlePatient}>
                 <option >Vul naam patient in.</option>
                 {patientSelectorInputsJSX}
             </select><br/>
             <label htmlFor="dentist">Kies een tandarts:</label><br/>
-            <select name="setDentist" id="dentist" onChange={handleDentist}>
+            <select name="dentist" id="dentist" onChange={handleDentist}>
                 <option value="{}">Vul naam tandarts in.</option>
                 {dentistSelectorInputsJSX}
             </select><br/>
             <label htmlFor="assistant">Kies een assistent:</label><br/>
-            <select name="setAssistant" id="assistant" onChange={handleAssistant}>
+            <select name="assistant" id="assistant" onChange={handleAssistant}>
                 <option value="{}">Vul naam assistent in</option>
                 {assistantSelectorInputsJSX}
             </select><br/>
-            <label htmlFor="dag">Kies een dag:</label><br/>
-            <select name="dag" id="dag" onChange={handleDay}>
+            <label htmlFor="day">Kies een dag:</label><br/>
+            <select name="day" id="day" onChange={handleDay}>
                 <option value="{}">Vul nieuwe dag in {initDay}</option>
                 {daysJSX}
             </select><br/>
@@ -184,7 +215,8 @@ const ScheduleNewAppointment = (props) => {
             <br/>
             <button onClick={checkPossible}>Kijk of deze Afspraak mogelijk is</button>
             <br/>
-            <button type="submit">Plan Afspraak</button>
+            {(typeof props.appToAlter!=="undefined") ? <button onClick={handleRemove} >Verwijder deze afspraak.</button> : null}
+            <button type="submit" disabled={!enableSubmit}>Plan Afspraak</button>
         </form>
     )
 }
